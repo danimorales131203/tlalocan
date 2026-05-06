@@ -1,60 +1,111 @@
-import './style.css'
-import javascriptLogo from './assets/javascript.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import { setupCounter } from './counter.js'
+import './style.css';
 
-document.querySelector('#app').innerHTML = `
-<section id="center">
-  <div class="hero">
-    <img src="${heroImg}" class="base" width="170" height="179">
-    <img src="${javascriptLogo}" class="framework" alt="JavaScript logo"/>
-    <img src="${viteLogo}" class="vite" alt="Vite logo" />
-  </div>
-  <div>
-    <h1>Get started</h1>
-    <p>Edit <code>src/main.js</code> and save to test <code>HMR</code></p>
-  </div>
-  <button id="counter" type="button" class="counter"></button>
-</section>
+const openTrailer = document.getElementById('openTrailer');
+const closeTrailer = document.getElementById('closeTrailer');
+const videoPopup = document.getElementById('videoPopup');
+const trailerVideo = document.getElementById('trailerVideo');
 
-<div class="ticks"></div>
+openTrailer.addEventListener('click', () => {
+  videoPopup.classList.add('active');
+  trailerVideo.play();
+});
 
-<section id="next-steps">
-  <div id="docs">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#documentation-icon"></use></svg>
-    <h2>Documentation</h2>
-    <p>Your questions, answered</p>
-    <ul>
-      <li>
-        <a href="https://vite.dev/" target="_blank">
-          <img class="logo" src="${viteLogo}" alt="" />
-          Explore Vite
-        </a>
-      </li>
-      <li>
-        <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-          <img class="button-icon" src="${javascriptLogo}" alt="">
-          Learn more
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="social">
-    <svg class="icon" role="presentation" aria-hidden="true"><use href="/icons.svg#social-icon"></use></svg>
-    <h2>Connect with us</h2>
-    <p>Join the Vite community</p>
-    <ul>
-      <li><a href="https://github.com/vitejs/vite" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#github-icon"></use></svg>GitHub</a></li>
-      <li><a href="https://chat.vite.dev/" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#discord-icon"></use></svg>Discord</a></li>
-      <li><a href="https://x.com/vite_js" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#x-icon"></use></svg>X.com</a></li>
-      <li><a href="https://bsky.app/profile/vite.dev" target="_blank"><svg class="button-icon" role="presentation" aria-hidden="true"><use href="/icons.svg#bluesky-icon"></use></svg>Bluesky</a></li>
-    </ul>
-  </div>
-</section>
+closeTrailer.addEventListener('click', () => {
+  videoPopup.classList.remove('active');
+  trailerVideo.pause();
+  trailerVideo.currentTime = 0;
+});
 
-<div class="ticks"></div>
-<section id="spacer"></section>
-`
+videoPopup.addEventListener('click', (event) => {
+  if (event.target === videoPopup) {
+    videoPopup.classList.remove('active');
+    trailerVideo.pause();
+    trailerVideo.currentTime = 0;
+  }
+});
 
-setupCounter(document.querySelector('#counter'))
+const buyButtons = document.querySelectorAll('.buy-button');
+const cartItemsContainer = document.getElementById('cartItems');
+const cartTotal = document.getElementById('cartTotal');
+const cartCount = document.getElementById('cartCount');
+
+let cart = JSON.parse(localStorage.getItem('tlalocanCart')) || [];
+
+function saveCart() {
+  localStorage.setItem('tlalocanCart', JSON.stringify(cart));
+}
+
+function renderCart() {
+  cartItemsContainer.innerHTML = '';
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = `
+      <p class="empty-cart">Aún no has agregado productos al carrito.</p>
+    `;
+  }
+
+  cart.forEach((product) => {
+    cartItemsContainer.innerHTML += `
+      <div class="cart-item">
+        <h3>${product.name}</h3>
+        <span>$${product.price.toFixed(2)} USD</span>
+        <button class="remove-cart-item" data-id="${product.id}">Quitar</button>
+      </div>
+    `;
+  });
+
+  const total = cart.reduce((sum, product) => sum + product.price, 0);
+
+  cartTotal.textContent = `$${total.toFixed(2)} USD`;
+  cartCount.textContent = `(${cart.length})`;
+
+  updateBuyButtons();
+}
+
+function updateBuyButtons() {
+  buyButtons.forEach((button) => {
+    const isInCart = cart.some((product) => product.id === button.dataset.id);
+
+    if (isInCart) {
+      button.textContent = 'Quitar';
+      button.classList.add('added');
+    } else {
+      button.textContent = 'Comprar';
+      button.classList.remove('added');
+    }
+  });
+}
+
+buyButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const product = {
+      id: button.dataset.id,
+      name: button.dataset.name,
+      price: Number(button.dataset.price),
+    };
+
+    const isInCart = cart.some((item) => item.id === product.id);
+
+    if (isInCart) {
+      cart = cart.filter((item) => item.id !== product.id);
+    } else {
+      cart.push(product);
+    }
+
+    saveCart();
+    renderCart();
+  });
+});
+
+cartItemsContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('remove-cart-item')) {
+    const productId = event.target.dataset.id;
+
+    cart = cart.filter((item) => item.id !== productId);
+
+    saveCart();
+    renderCart();
+  }
+});
+
+renderCart();
