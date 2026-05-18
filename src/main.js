@@ -56,7 +56,7 @@ function renderCart() {
 
   const total = cart.reduce((sum, product) => sum + product.price, 0);
 
-  cartTotal.textContent = `$${total.toFixed(2)} USD`;
+  cartTotal.textContent = `$${total.toFixed(2)} MXN`;
   cartCount.textContent = `(${cart.length})`;
 
   updateBuyButtons();
