@@ -1,11 +1,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Rajdhani:wght@400;500;600&display=swap');
 
 :root {
   --bg-dark: #050814;
   --cyan: #65f3d4;
   --cyan-soft: rgba(101, 243, 212, 0.25);
   --text-light: #f2ffff;
+  
 }
 
 html {
@@ -96,6 +98,7 @@ body {
   color: var(--cyan);
   text-decoration: none;
   text-transform: uppercase;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -208,7 +211,7 @@ body {
 .hero-description {
   max-width: 520px;
   color: rgba(242, 255, 255, 0.85);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 34px;
@@ -596,7 +599,7 @@ body {
 
 .feature-content p {
   color: rgba(242, 255, 255, 0.82);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -835,7 +838,7 @@ body {
 
 .about-content p {
   color: rgba(242, 255, 255, 0.82);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 16px;
   line-height: 1.65;
   max-width: 760px;
@@ -968,7 +971,7 @@ body {
 .product-info p,
 .product-info li {
   color: rgba(242, 255, 255, 0.82);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 14px;
   line-height: 1.45;
 }
@@ -1092,7 +1095,7 @@ body {
 
 .empty-cart {
   color: rgba(242, 255, 255, 0.7);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 .cart-footer {
@@ -1387,7 +1390,7 @@ body {
 
 .about-text-content p {
   color: rgba(242, 255, 255, 0.86);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 17px;
   line-height: 1.8;
   text-align: justify;
@@ -1472,7 +1475,7 @@ body {
 
 .member-info p {
   color: rgba(242, 255, 255, 0.86);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 17px;
   line-height: 1.8;
   text-align: justify;
@@ -1506,7 +1509,7 @@ body {
 .media-intro p {
   max-width: 820px;
   color: rgba(242, 255, 255, 0.82);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 17px;
   line-height: 1.7;
 }
@@ -1566,7 +1569,7 @@ body {
 
 .media-card-content p {
   color: rgba(242, 255, 255, 0.84);
-  font-family: Arial, sans-serif;
+  font-family: 'Rajdhani', sans-serif;
   font-size: 15px;
   line-height: 1.7;
   text-align: justify;
